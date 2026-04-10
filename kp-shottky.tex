@@ -709,6 +709,185 @@ d[Z^+, L] = [dZ^+ - Z^+ Z^+, L] = 0.
 \subsection{Одевающий оператор и уравнение Сато-Вильсона}
 
 
+Будем искать решение уравнений КП в виде \(L = WDW^{-1}\), где 
+\(W = 1 + w_{-1}D^{-1} + w_{-2}D^{-2} + \dots \in \mathcal{V}_K\). 
+Оператор \(W\) называется \textit{одевающим}.
+
+
+\begin{lemma}
+  Для любого оператора \( L = D + u_{-1}D^{-1} + u_{-2}D^{-2} + \dots \in \mathcal{K} \) существует такой оператор \( W \in \mathcal{V}_K \), что \( L = WDW^{-1} \). Этот оператор единствен с точностью до умножения справа на оператор из \( \mathcal{V}_k \).
+\end{lemma}
+
+\begin{proof}
+  Решим уравнение \( LW = WD \) с неопределенным \( W \). Оно эквивалентно следующей системе обыкновенных дифференциальных уравнений:
+  \[
+    \frac{dw_\nu}{dx} = -\sum_{\mu \leq -1} \sum_{i \geq 0} \binom{\mu}{i} u_\mu w^{(i)}_{\nu-\mu+i}, \qquad \nu = -1, -2, -3, \dots
+  \]
+  Правая часть зависит лишь от \( w_{-1}, w_{-2}, \dots, w_{\nu+1} \), поэтому уравнения могут быть решены по индукции.
+
+  Если теперь \( W, W' \in \mathcal{K} \) таковы, что \( L = WDW^{-1} = W'W'^{-1} \), то \( [D, W^{-1}W'] = 0 \), поэтому \( W^{-1}W' \in \mathcal{V}_k \).
+\end{proof}
+
+\begin{exercise}
+  Докажите теорему о централизаторе, используя эту лемму.
+\end{exercise}
+
+Введем дифференциальную форму
+\[
+  \omega_D = \sum_n dt_n D^n.
+\]
+Ясно, что \( W\omega_D W^{-1} = \sum_n dt_n L^n \).
+
+\begin{proposition}
+    Уравнение \ref{eq:KP} эквивалентно уравнению Сато–Вильсона.
+    
+    \begin{equation*}\label{eq:SV}
+    dW = Z^- W, \qquad Z^- = -(W \omega_D W^{-1})_-. \tag{СВ}
+    \end{equation*}
+\end{proposition}
+
+\begin{proof}
+  Пусть имеется решение \(W\) уравнения \ref{eq:SV}. Положим 
+  \[
+    L = WDW^{-1}.
+  \]
+  Тогда 
+  \[
+    dL = dWDW^{-1} - WDW^{-1}dWW^{-1} = Z^{-}WDW^{-1} - WDW^{-1}Z^{-} = [Z^{-}, L].
+  \]
+
+  Обратно, пусть для решения \(L\) уравнения \ref{eq:KP} нашелся такой оператор 
+  \[
+    W_0 \in \mathcal{E}_K,
+  \]
+  что 
+  \[
+    L = W_0DW_0^{-1};
+  \]
+  пусть 
+  \[
+    Z_0^{-} = W_0^{-1}Z^{-}W_0 - W_0^{-1}dW_0.
+  \]
+  — калибровочное преобразование связности \(Z^{-}\). Поэтому если последняя была плоской (а это равносильно уравнению \ref{eq:KP}), то и \(Z_0^{-}\) будет таковой. Покажем, что 
+  \[
+    Z_0^{-} \in \Omega^1 \otimes_k \mathcal{E}_k,
+  \]
+  т. е. псевдодифференциальные операторы в \(Z_0^{-}\) имеют постоянные коэффициенты:
+  \[
+    \begin{aligned}
+      [Z_0^{-}, D] &= W_0^{-1}[W_0Z_0^{-}W_0^{-1}, W_0DW_0^{-1}]W_0 
+                    = W_0^{-1}[Z^{-} - dW_0W_0^{-1}, L]W_0 = \\
+                  &= W_0^{-1}\bigl([Z^{-}, L] - [dW_0W_0^{-1}, L]\bigr)W_0 
+                    = W_0^{-1}(dL - dL)W_0 = 0,
+    \end{aligned}
+  \]
+  ибо 
+  \[
+    dL = dW_0DW_0^{-1} - W_0DW_0^{-1}dW_0W_0^{-1} = [dW_0W_0^{-1}, L].
+  \]
+
+  Поэтому существует такой оператор \(C \in \mathcal{V}_{k[[t_1, t_2, \dots]]}\), что 
+  \[
+    dC = Z_0^{-}C
+  \]
+  (это уравнение совместно благодаря плоскости связности \(Z_0^{-}\)). Положив \(W = W_0C\), находим 
+  \[
+    dW - Z^{-}W = dW_0C + W_0dC - Z^{-}W_0C = 
+    = W_0\bigl(W_0^{-1}dW_0 + dC\,C^{-1} - W_0^{-1}Z^{-}W_0\bigr)C = 0.
+  \]
+и, кроме того, \( WDW^{-1} = W_0CDC^{-1}W_0^{-1} = W_0DW_0^{-1} = L \).
+
+\end{proof}
+
+\begin{exercise}
+  Докажите плоскость связности \( Z_0^- \) непосредственно.
+\end{exercise}
+
+\begin{corollary}
+  Уравнение Сато–Вильсона совместно.
+\end{corollary}
+
+\begin{proof}
+  \[
+    d(Z^-W) = (dZ^- - Z^-Z^-)W = 0.
+  \]
+\end{proof}
+
+Обозначим
+\[
+  \text{Sol(КП)} = \{L \in \mathcal{K}_K \mid L \text{ удовлетворяет \ref{eq:KP}}\}
+\]
+и
+\[
+  \text{Sol(CB)} = \{W \in \mathcal{V}_K \mid W \text{ удовлетворяет \ref{eq:SV}}\}.
+\]
+
+\begin{proposition}
+  Имеет место биекция между множествами \(\text{Sol(KII)}\) и \(\text{Sol(CB)}/\mathcal{V}_k\).
+\end{proposition}
+
+\begin{proof}
+  Переход от \( W \in \text{Sol(CB)} \) к \( L \in \text{Sol(КП)} \) осуществляется по формуле \( L = WDW^{-1} \), откуда следует, что если
+  \[
+    W_1DW_1^{-1} = W_2DW_2^{-1},
+  \]
+  то \( W_2 = W_1C \) с \( C \in \mathcal{V}_{k[t_1,t_2,\ldots]} \). Но из уравнения \ref{eq:SV} следует, что
+  \[
+    d(W_1C) = Z^-(W_1C),
+  \]
+  \[
+    dW_1C + W_1dC = Z^-W_1C,
+  \]
+  \[
+    W_1dC = 0,
+  \]
+  т. е. \( dC = 0 \), и потому \( C \in \mathcal{V}_k \).
+\end{proof}
+
+Сейчас мы опишем путь, следуя которым можно доказать интегрируемость уравнения \ref{eq:SV}. Основная идея состоит в том, чтобы решить «дополнительное» к \ref{eq:SV} уравнение
+\[
+  dY = Z^+Y
+\]
+и показать, что произведение \( W^{-1}Y \) удовлетворяет некоторому линейному уравнению. Для возвращения от линейного уравнения к \ref{eq:SV} требуется некоторая теорема о разложении, к формулировке которой мы переходим.
+
+
+
+\subsection{Теорема о разложении}
+
+
+Зададим на алгебре \( \mathcal{K} = k[[x, t_1, t_2, \dots]] \) нормирование \( v \), полагая \( v(x) = 0 \),  
+\( v(t_i) = i \). Пусть \( \pi: \mathcal{K} \to \mathcal{K}/(t_1, t_2, \dots) \cong K \) — естественная проекция. Рассмотрим пополнения алгебр \( \mathcal{E}_\mathcal{K} \) и \( \mathcal{D}_\mathcal{K} \):
+
+\[
+\hat{\mathcal{E}}_\mathcal{K} = \left\{ P = \sum_{i \in \mathbb{Z}} p_i D^i \;\middle|\; \forall P \;\exists N, M, C > 0:\; v(p_i) > C i + M \text{ при } i > N \right\},
+\]
+
+\[
+\hat{\mathcal{D}}_\mathcal{K} = \{ P \in \hat{\mathcal{E}}_\mathcal{K} \mid P_- = 0 \}.
+\]
+
+\begin{exercise}
+  Докажите, что эти пополнения действительно являются алгебрами, в частности, корректно определено произведение их элементов (условие роста, наложенное на коэффициенты, должно обеспечить сходимость некоторых формальных рядов).
+
+\end{exercise}
+
+Введем еще следующие множества:
+\[
+\hat{\mathcal{E}}_\kappa^\times = \{P \in \hat{\mathcal{E}}_\kappa \mid \pi(P) \in \mathcal{V}_K \text{ и } \exists P^{-1} \in \hat{\mathcal{E}}_\kappa\},
+\]
+\[
+\hat{D}_\kappa^\times = \{P \in \hat{D}_\kappa \mid \pi(P) = 1 \text{ и } \exists P^{-1} \in \hat{D}_\kappa\}.
+\]
+
+\begin{proposition}
+  Множества \(\hat{\mathcal{E}}_\kappa^\times\) и \(\hat{D}_\kappa^\times\) образуют формальные группы относительно умножения операторов.
+\end{proposition}
+
+\begin{theorem}
+  Для любого оператора \(\Psi \in \hat{\mathcal{E}}_\kappa^\times\) существуют и единственны такие операторы \(W \in \mathcal{V}_K\) и \(Y \in \hat{D}_\kappa^\times\), что \(\Psi = W^{-1}Y\), иными словами, имеет место факторизация \(\hat{\mathcal{E}}_\kappa^\times = \mathcal{V}_K \hat{D}_\kappa^\times\).
+\end{theorem}
+
+Доказательства предложения и теоремы мы пока отложим.
 
 
 
@@ -717,20 +896,326 @@ d[Z^+, L] = [dZ^+ - Z^+ Z^+, L] = 0.
 
 
 
+\subsection{От уравнения Сато-Вильсона к линейному уравнению}
+\begin{theorem}[О дифференциальном уравнении]
+  Существует единственный оператор \( Y \in \hat{D}_{\kappa}^{\times} \), удовлетворяющий уравнению
+  \[
+    dY = Z^{+}Y, \qquad Z^{+} = (W\omega_{D}W^{-1})_{+}.
+  \]
+  Доказательство, обремененное техническими деталями, мы приведем позднее. Скажем лишь, что в основе его лежит индуктивное построение оператора \( Y \). Возможность построения обеспечивают некоторые условия конечности.
+\end{theorem}
+
+\begin{theorem}
+  Уравнение \ref{eq:SV} равносильно линейному дифференциальному уравнению
+  \begin{equation*}\label{eq:L}
+    d\Psi = \omega_{D}\Psi \tag{Л}
+  \end{equation*}
+  на \( \Psi \in \hat{\mathcal{E}}_{\kappa}^{\times} \).
+\end{theorem}
+
+\begin{proof}
+  Пусть \( W \in \mathcal{V}_{\kappa} \) есть решение \ref{eq:SV}: \( dW = Z^{-}W \). Найдем решение \( Y \) уравнения \( dY = Z^{+}Y \) и положим \( \Psi = W^{-1}Y \). Тогда
+  \[
+    d\Psi = -W^{-1}dW\,W^{-1}Y + W^{-1}dY = -W^{-1}Z^{-}Y + W^{-1}Z^{+}Y = W^{-1}(-Z^{-}+Z^{+})W\Psi = \omega_{D}\Psi.
+  \]
+
+  Обратно, пусть \( \Psi \) есть решение \ref{eq:L}. По теореме о разложении, существуют такие операторы \( W \in \mathcal{V}_{\kappa} \) и \( Y \in \hat{D}_{\kappa}^{\times} \), что \( \Psi = W^{-1}Y \). Имеем:
+  \[
+    \omega_{D} = d\Psi\,\Psi^{-1} = -W^{-1}dW\,W^{-1}Y Y^{-1}W + W^{-1}dY\,Y^{-1}W = -W^{-1}dW\,W^{-1} + W^{-1}dY\,Y^{-1}W,
+  \]
+  т. е.
+  \[
+    Z^{+} - Z^{-} = -dW\,W^{-1} + dY\,Y^{-1}.
+  \]
+  Сравнивая положительные и отрицательные части, получаем, что \( dW = Z^{-}W \) (и \( dY = Z^{+}Y \)).
+\end{proof}
 
 
 
 
 
 
+\subsection{Решение линейного уравнения}
+
+
+\begin{theorem}
+  Для любого \(\Psi_0 \in \mathcal{V}_K\) уравнение \(d\Psi = \omega_D \Psi\) имеет единственное решение \(\Psi(t) \in \hat{\mathcal{K}}^c_K\) с \(\Psi(0) = \Psi_0\). Это решение задается формулой
+  \[
+    \Psi(t) = \exp\left(\sum t_i D^i\right) \Psi_0.
+  \]
+\end{theorem}
+
+\begin{proof}
+  Обозначим
+  \[
+    E(t) = \exp\left(\sum t_i D^i\right).
+  \]
+  Это корректно определенный элемент \(\hat{D}^\times_K\), кроме того, \(dE(t) = \omega_D E(t)\), поэтому \(E(t)\Psi_0\) — решение (Л) с заданным начальным условием.
+
+  Докажем единственность решения (Л) с нулевым начальным условием. Пусть \(\Psi(t)\) есть решение с \(\Psi(0) = 0\). Уравнение (Л) равносильно системе
+  \[
+    \partial_n \Psi = D^n \Psi, \qquad n = 1, 2, \dots
+  \]
+  Поэтому
+  \[
+    \partial_{n_1} \dots \partial_{n_k} \Psi = D^{n_1 + \dots + n_k} \Psi,
+  \]
+  откуда
+  \[
+    (\partial_{n_1} \dots \partial_{n_k} \Psi)(0) = D^{n_1 + \dots + n_k} (\Psi(0)).
+  \]
+  Поскольку коэффициенты \(\Psi\) суть формальные ряды по \(t_1, t_2, \dots\), это означает, что \(\Psi(t) \equiv 0\).
+\end{proof}
+
+\begin{exercise}
+  Разложите оператор \( E(t) \) по степеням \( D \):
+  \[
+    E(t) = \sum_{i \geq 1} p_i(t)D^i.
+  \]
+  Проверьте, что
+  \[
+    p_0 = 1,\quad
+    p_1 = t_1,\quad
+    p_2 = t_2 + \frac{t_1^2}{2},\quad
+    p_3 = t_3 + t_1t_2 + \frac{t_1^3}{6}.
+  \]
+  Однородные (относительно нормирования \( v \)) многочлены \( p_i(t) \) называются \textbf{многочленами Шура}.
+\end{exercise}
+
+\begin{corollary}
+  Уравнение \ref{eq:SV} интегрируемо, т. е. для любого \( W_0 \in \mathcal{V}_K \) существует единственное решение \( W(t) \in \mathcal{V}_K \) уравнения \ref{eq:SV} с \( W(0) = W_0 \).
+\end{corollary}
+
+\begin{proof}
+  Решим уравнение \ref{eq:L} с начальным условием \( \Psi_0 = W_0^{-1} \) и разложим решение \( \Psi(t) = W^{-1}(t)Y(t) \), тогда оператор \( W(t) \) должен быть решением \ref{eq:SV}, а
+\[
+  W(0)^{-1} = \Psi(0) = W_0^{-1},
+\]
+
+поскольку \( Y(0) = 1 \). Это решение единственно в силу единственности разложения и единственности решения линейного уравнения.
+
+\end{proof}
+
+Отсюда вытекает наличие биекции между множествами \( V_K \) и \( \operatorname{Sol}(CB) \).
+
+\begin{corollary}
+  Иерархия КП интегрируема. Имеется биекция между множествами \( V_K / V_k \) и \( \operatorname{Sol}(K\Pi) \). $\square$
+\end{corollary}
 
 
 
 
 
+\subsection{Доказательство теоремы о разложении}
+Пусть \( A \) есть \( k \)-алгебра с нормированием \( v \), идеалом нормирования \( I \) и канонической проекцией \( \pi : A \to A/I \). Положим, как и выше,
+
+\[
+\hat{\mathcal{E}}_A = \left\{ P = \sum_{i \in \mathbb{Z}} p_i D^i \;\middle|\; \forall P \;\exists N, M, C > 0:\; v(p_i) > Ci + M \text{ при } i > N \right\}.
+\]
+
+Теорема утверждает, что для любого элемента \( U \) множества
+
+\[
+\hat{\mathcal{E}}_A^\times = \{ P \in \hat{\mathcal{E}}_A \mid \pi(P) \in \mathcal{V}_{A/I} \text{ и } \exists P^{-1} \in \hat{\mathcal{E}}_\mathcal{K} \},
+\]
+
+существуют такие операторы
+
+\[
+W \in \mathcal{V}_A, \qquad
+Y \in \hat{D}_A^\times = \{ P \in \hat{D}_A \mid \pi(P) = 1 \text{ и } \exists P^{-1} \in \hat{D}_A \},
+\]
+
+что \( U = W^{-1}Y \).
+
+Построим оператор \( W \in \mathcal{V}_A \) так, чтобы \( WU \in \hat{D}_A^\times \). Имеем
+
+\[
+WU = \left( 1 + \sum_{\alpha \ge 1} w_\alpha D^{-\alpha} \right) U =
+\]
+\[
+= \sum_{\beta \in \mathbb{Z}} u_\beta D^\beta + \sum_{\alpha \ge 1} \sum_{\beta \in \mathbb{Z}} \sum_{i \ge 0} \binom{-\alpha}{i} w_\alpha u_\beta^{(i)} D^{-\alpha + \beta - i} =
+\]
+\[
+= \sum_{\beta \in \mathbb{Z}} u_\beta D^\beta + \sum_{\gamma \in \mathbb{Z}} \left( \sum_{\alpha \ge 1} \sum_{i \ge 0} \binom{-\alpha}{i} w_\alpha u^{(i)}_{\gamma + \alpha + i} \right) D^\gamma.
+\]
+
+Поэтому должны выполняться следующие уравнения:
+
+\[
+u_{-\beta} + \sum_{\alpha \ge 1} \sum_{i \ge 0} \binom{-\alpha}{i} w_\alpha u^{(i)}_{\gamma + \alpha + i} = 0, \qquad \beta = 1, 2, \dots.
+\]
+
+Положим
+
+\[
+u = (u_{-1}, u_{-2}, \dots), \quad w = (w_1, w_2, \dots),
+\]
+\[
+M = \left( \sum_{i \ge 0} \binom{-\alpha}{i} u^{(i)}_{\alpha - \beta + i} \right)_{\alpha, \beta = 1, 2, \dots},
+\]
+
+тогда наши уравнения запишутся в виде  
+\[ wM = -u. \]
+
+
+Поэтому \( w = -uM^{-1} \). Мы докажем, что обратная матрица корректно определена рядом  
+\[
+\sum_{n \geq 0} (1 - M)^n
+\]
+и вектор \(-uM^{-1}\) также корректно определен.
+
+Пусть  
+\[
+N = 1 - M = (a_{\mu\nu}) \text{ и } N^n = (a_{n,\mu\nu}).
+\]
+
+Так как  
+\[
+a_{\mu\nu} = \delta_{\mu\nu} - \sum_{i \geq 0} \binom{-\mu}{i} u^{(i)}_{\mu-\nu+i},
+\]
+
+имеем
+
+\[
+\pi(a_{\mu \nu}) = 1 - \sum_{i \geq 0} \binom{-\mu}{i} \pi(u^{(i)}_{\mu-\nu+i}) = 1 - \sum_{i \geq 0} \binom{-\mu}{i} \pi(u_{\mu-\nu+i})^{(i)} = 0,
+\]
+
+поскольку \(\pi(u_i) = 0\) при \(i > 0\) по условию. Аналогично
+
+\[
+\pi(a_{\mu \nu}) = -\sum_{i \geq 0} \binom{-\mu}{i} u_{\mu-\nu+i}^{(i)} = 0.
+\]
+
+Из условия роста на \(v(u_i)\) следует, что существует такое положительное число \(J\), что
+
+\[
+v(a_{\mu \nu}) \geq J(\mu - \nu + 1) \text{ при } \mu - \nu \geq -1.
+\]
+
+Утверждается, что для всех \(n \geq 1\)
+
+\[
+v(a_{\mu \nu}) \geq J(\mu - \nu + n) \text{ при } \mu - \nu \geq -n.
+\]
+
+Для доказательства используем индукцию, принимая во внимание, что \(N^{n+1} = N^n N\) и
+
+\[
+a_{n+1,\mu\nu} = \sum_{l \geq 1} a_{n,\mu l} a_{l\nu} = \sum_{l=1}^{\nu-1} a_{n,\mu l} a_{l\nu} + \sum_{l=\nu}^{\mu+n} a_{n,\mu l} a_{l\nu} + \sum_{l=\mu+n+1}^{\infty} a_{n,\mu l} a_{l\nu}.
+\]
+
+Предположим, что \(\mu - \nu \geq -n - 1\). Тогда в первой сумме \(\nu - 1 \geq l\) и \(\mu - l \geq \mu - \nu + 1 \geq -n\), а потому
+
+\[
+v\!\left(\sum_{l=1}^{\nu-1} a_{n,\mu l} a_{l\nu}\right) \geq J(\mu - \nu + n + 1).
+\]
+
+Во второй сумме \(\nu \leq l \leq \mu + n\) и \(\mu - l \geq -n\), \(l - \nu \geq 0\), а потому
+
+\[
+v\!\left(\sum_{l=\nu}^{\mu+n} a_{n,\mu l} a_{l\nu}\right) \geq J(\mu - \nu + n + 1).
+\]
+
+Наконец, в третьей сумме \(l \geq \mu + n + 1\) и \(l - \nu \geq \mu - \nu + n + 1\), а потому
+
+\[
+v\!\left(\sum_{l=\mu+n+1}^{\infty} a_{n,\mu l} a_{l\nu}\right) \geq v(a_{l\nu}) \geq J(l - \nu + 1) \geq J(\mu - \nu + n + 1).
+\]
+
+Итак, ряд \[ \sum_{n \geq 0} (1 - M)^n \] корректно определяет матрицу \( M^{-1} = (b_{\mu\nu}) = \begin{pmatrix} a_{n,\mu\nu} \\ b_{\mu\nu} \end{pmatrix} \). При \(\mu > \nu\)
+
+\[
+v(b_{\mu\nu}) = v\!\left(\sum_{n \geq 0} a_{n,\mu\nu}\right) \geq J(\mu - \nu).
+\]
+
+Следовательно,
+
+\[
+w_{\nu} = -\sum_{\mu \geq 1} u_{-\mu}b_{\mu\nu} = -\sum_{\mu=1}^{\nu} u_{-\mu}b_{\mu\nu} - \sum_{\mu=\nu+1}^{\infty} u_{-\mu}b_{\mu\nu}
+\]
+
+есть корректно определенный элемент алгебры \( A \). \( \square \)
+
+Предложение о том, что множества \( \mathcal{E}_K^\times \) и \( \mathcal{D}_K^\times \) образуют формальные группы доказывается аналогично. Нужно лишь доказать, что обратный элемент к оператору \( X \) одного из этих множеств корректно определяется формулой
+
+\[
+X^{-1} = \sum_{n \geq 0} (1 - X)^n.
+\]
+
+Формальность группового закона видна на следующем примере. Согласно указанной формуле
+
+\[
+(1 - t_1 D)^{-1} = 1 + t_1 D + t_1^2 D^2 + t_1^3 D^3 + \dots \in \mathcal{E}_K^\times,
+\]
+
+с другой же стороны,
+
+\[
+(1 - D)^{-1} = -D^{-1} - D^{-2} - D^{-3} - \dots \in \mathcal{E}_K.
+\]
+
+Поэтому вместо \( t_i \) нельзя подставлять элементы поля \( k \). Впрочем, предостережение об этом было сделано тогда, когда мы условились иметь дело с формальными рядами по \( t_i \).
 
 
 
+
+\subsection{Доказательство теоремы о дифференциальном уравнении}
+
+
+\begin{theorem}
+  Пусть \( \omega = \sum_{n=1}^\infty dt_n P_n \in \Omega^1 \otimes \mathcal{D_\mathcal{K}} \), причем
+  \begin{enumerate}
+    \item существует такое число \( c > 0 \), что \(\operatorname{ord} P_n \le n/c\) и
+    \item \( d\omega = \omega\omega \).
+  \end{enumerate}
+  Тогда для любого \( Y_0 \in \mathcal{D_\mathcal{K}} \) существует единственное решение \( Y(t) \in \hat{\mathcal{D}}_\mathcal{K} \) уравнения
+  \begin{equation*}\label{eq:D}
+    dY = \omega Y \tag{D}
+  \end{equation*}
+\end{theorem}
+
+
+
+\begin{proof}
+  Доказывается, что если из нескольких шагов, показывающих, что искомый оператор можно строить индуктивно и что результат действительно окажется элементом \( D_K \) (напомним о существовании некоторого условия роста на коэффициенты операторов из этой алгебры).
+
+  \textbf{Шаг 1.} Уравнение \ref{eq:D} эквивалентно системе уравнений
+  \[
+    \partial_n Y = P_n Y \tag{1}
+  \]
+  с \( n = 1, 2, \dots \).
+
+  \textbf{Шаг 2.} Если выполнено условие (2) теоремы, то уравнение
+  \[
+    \partial_n y = P_n y \tag{1}
+  \]
+  на \( y \in K \) однозначно разрешимо при любом \( y_0 \in K \).
+
+  Действительно, пусть \( K_n = K / (t_{n+1}, t_{n+2}, \dots) \). Будем искать решение \( y_n \in K_n \) уравнения (1). Начало индукции: \( y = y_0 \in K = K_0 \). Далее, пусть \( y_{n-1} \) есть решение (1). Ищем \( y_n \) в виде
+  \[
+    y_n = \sum_{i \geq 0} b_i \frac{t_i^n}{i!},
+  \]
+  где \( b_0 = y_{n-1}, b_1, b_2, \dots \in K_{n-1} \). Пусть
+  \[
+    P_n = \sum_{k=0}^{n/c} a_k D^k
+  \]
+  и
+  \[
+    a_k = \sum_{j \geq 0} a_{k,j} \frac{t_j^n}{j!}.
+  \]
+  Заметим, что
+  \[
+    \partial_n y_n = \sum_{i \geq 0} b_i \frac{t_i^{n-1}}{(i-1)!}.
+  \]
+  Далее,
+  \[
+    0 = \partial_n y_n - P_n y_n = \sum_{i \geq 0} b_i \frac{t_i^{n-1}}{(i-1)!} - \sum_{k,j,i} a_{k,j} \frac{t_j^n}{j!} b_i \frac{t_i^n}{i!} =
+  \]
+  \[
+    = \sum_{\alpha=0}^c \left( b_{\alpha+1} - \sum_{i=0}^{\alpha} \sum_{k=0}^{\alpha} \binom{\alpha}{i} a_{k,\alpha-i} b_i^{(k)} \right) \frac{t_n^\alpha}{\alpha!}.
+  \]
+\end{proof}
 
 
 
