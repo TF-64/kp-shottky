@@ -14,14 +14,19 @@
 \usepackage{amsthm}
 \usepackage{enumerate}
 \usepackage{fancyvrb, alltt}
-\usepackage{tikz-cd, tikz}
+\usepackage{tikz-cd}
 \usepackage{hyperref}
+\usepackage{ytableau}
+\usepackage{tikz}
+\usepackage{circuitikz}
+\usepackage{subcaption}
+
 % ГРАФИКА
+\usetikzlibrary{arrows.meta}
 
 %\geometry{verbose,a4paper,tmargin=2cm,bmargin=2cm,lmargin=1.5cm,rmargin=1.5cm}
 
 \geometry{top=2cm,bottom=2cm,left=2.5cm,right=2cm}
-
 \graphicspath{ {./images/} }
 
 % ТЕОРЕМЫ
@@ -708,7 +713,7 @@ d[Z^+, L] = [dZ^+ - Z^+ Z^+, L] = 0.
 
 
 
-\subsection{Одевающий оператор и уравнение Сато-Вильсона}
+\subsection{Одевающий оператор и уравнение Сато-Вильсона}\label{dressing_operator}
 
 
 Будем искать решение уравнений КП в виде \(L = WDW^{-1}\), где 
@@ -1813,6 +1818,716 @@ u_i = z^i + (\text{линейная комбинация } z \text{ бóльши
 
 
 \subsection{Плюккерово описание бесконечномерного грассманиана}
+
+
+
+
+
+Пусть \( A \) есть некоторая коммутативная \( k \)-алгебра. Для полубесконечного индекса \( I \) и точки \( \xi = \Xi \bmod \operatorname{GL}(A) \in G(A) \) определим плюккерову координату \( \pi_I(\xi) \) как детерминант
+\[
+\pi_I(\xi) = \det \Xi_I.
+\]
+Благодаря условиям (1) и (2) фактически вычисляется детерминант конечномерной матрицы (укажем, что \( \Xi_I \) имеет вид четвертьбесконечной матрицы). Из условия (3) вытекает, что у данной точки \( G(A) \) есть хоть одна ненулевая (и обратная) плюккерова координата. Действие \( g \in \operatorname{GL}(A) \) сводится к одновременному умножению всех плюккеровых координат на \( \det g \). В этом смысле плюккеровы координаты «проективны». С их помощью нетрудно указать аффинные (бесконечномерные) карты \( G(A) \). Именно, рассмотрим подмножество
+\[
+G^I(A) = \{ \xi \in G(A) \mid \pi_I(\xi) \neq 0 \}.
+\]
+Для данной точки \( \xi \in G^I(A) \) существует такой элемент \( g \in \operatorname{GL}(A) \), что \( (\Xi_g)_I = E \) — единичная четвертьбесконечная матрица. Оставшиеся в \( \Xi_g \) числа суть аффинные координаты на \( G^I(A) \) для \( \xi \). Обозначим
+\[
+\pi_{I(i \to j)} = 
+\begin{cases} 
+0, & \text{если } i \notin I, \\
+\pi_J, & \text{если } i \in I,
+\end{cases}
+\]
+где \( J \) получается из \( I \) заменой \( i \) на \( j \). Тогда
+\[
+\left\{ 
+\begin{array}{c}
+\pi_{I(i \to j)} \\
+\pi_I
+\end{array} 
+\right\}
+\]
+есть набор аффинных координат в карте \( G^I(A) \).
+
+\begin{exercise}
+  1. Сопоставьте эти обозначения с конечномерной ситуацией.
+  
+  2. Выпишите формулы перехода от одной карты к другой и убедитесь в том, что \( G \) — алгебраическое многообразие.
+\end{exercise}
+
+Далее нам будет удобно изменить обозначения, связанные с полубесконечными индексами. Пусть \( \emptyset = ( \dots, -3, -2, -1 ) \). Сравним произвольный индекс \( I = ( \dots, i_3, i_2, i_1 ) \) с \( \emptyset \), составив разности \( y_k = i_k - (-k) \), \( k = 1, 2, 3, \dots \). Ясно, что
+\[
+y_1 \geq y_2 \geq \dots \geq y_s \geq y_{s+1} = 0 \dots
+\]
+Поставим в соответствие индекс \( I \) диаграмму Юнга \( Y \) с длинами строк \( y_1, y_2, \dots, y_s \):
+
+\[
+    \ydiagram{7, 5, 4, 3, 3, 1, 1}
+\]
+
+
+
+
+Обозначение \( \emptyset \) — это пустая диаграмма Юнга, отвечающая как раз \( ( \dots, -3, -2, -1 ) \). Итак, плюккеровы координаты мы будем нумеровать диаграммами Юнга.
+
+
+Определим полубесконечную внешнюю степень \( A \)-модуля \( V_A = A \otimes_k V = A((z)) \). Для индекса \( I \), отвечающего диаграмме \( Y \), определим моном
+\[
+e_Y = \cdots \wedge z^{i-3} \wedge z^{i-2} \wedge z^{i-1}.
+\]
+
+\vspace{1em}
+
+Назовем весом монома \( e_Y \) количество клеток \( |Y| \) в диаграмме \( Y \). Грубо говоря, вес измеряет, насколько \( I \) отличается от \( \emptyset \).
+
+\begin{definition}
+  Полубесконечной внешней степенью \( \bigwedge^{\infty/2} V_A \) \( A \)-модуля \( V_A \) называется пополнение относительно веса свободного \( A \)-модуля, порожденного мономами \( e_Y \) для всех диаграмм Юнга.
+\end{definition}
+
+В терминах \( \bigwedge^{\infty/2} V_A \) плюкеровы координаты получают привычную трактовку. Пусть \( \xi \in G(A) \) и \( \{u_i \mid i = 1, 2, \dots\} \) — допустимый базис. Тогда
+\[
+\cdots \wedge u_{-3} \wedge u_{-2} \wedge u_{-1} = \sum_Y \pi_Y(\xi) e_Y.
+\]
+
+\begin{exercise}
+  Покажите, что сопоставление
+  \[
+    \pi: \xi \mapsto (\cdots \wedge u_{-3} \wedge u_{-2} \wedge u_{-1}) A
+  \]
+  задает расслоение ранга 1 на \( G(A) \), называемое детерминантным.  
+  Это означает, что отображение
+  \[
+    \pi: G(A) \to P\bigl( \bigwedge^{\infty/2} V_A \bigr)
+  \]
+  корректно определено и является аналогом обычного плюкерова вложения.  
+  Ясно, что не каждая точка из \( P(\bigwedge^{\infty/2} V_A) \) отвечает подпространству из \( V_A \):  
+  прообраз имеют лишь разложимые полубесконечные мономы, в которых, начиная с некоторого места, стоят подряд векторы \( z^s, z^{s-1}, \dots \). Существует изящный способ описать необходимые и достаточные условия разложимости.  
+  Напомним сперва конечномерную ситуацию.
+
+  Рассмотрим конечномерное пространство \( V \) и его внешнюю алгебру \( \bigwedge V \).  
+  Выберем и зафиксируем в \( V \) базис \( \{e_1, \dots, e_n\} \) и в \( V^* \) двойственный к нему базис \( \{e^*_1, \dots, e^*_n\} \). Определим операторы
+  \[
+      \hat{e}_i: \bigwedge^k V \to \bigwedge^{k+1} V, \quad \hat{e}_i(\omega) = e_i \wedge \omega;
+  \]
+  \[
+      \hat{e}^*_i: \bigwedge^k V \to \bigwedge^{k-1} V, \quad \hat{e}^*_i(v_1 \wedge \cdots \wedge v_k) = \sum_{s=1}^k (-1)^{s+1} v_1 \wedge \cdots \wedge e^*_i(v_s) \wedge \cdots \wedge v_k.
+  \]
+\end{exercise}
+
+Оператор \(\Omega = \sum_i \hat{e}_i \otimes \hat{e}_i^*\) на \(\bigwedge V \otimes \bigwedge V\) не зависит от базиса, и верно такое
+
+\begin{statement}
+  Элемент \(\omega \in \bigwedge V\) разложим тогда и только тогда, когда  
+  \[
+    \Omega(\omega \otimes \omega) = 0.
+  \]
+\end{statement}
+
+
+Действительно, для разложимого элемента \(\omega = v_1 \wedge \cdots \wedge v_k\)  
+\[
+    \left( \sum_i \hat{v}_i \otimes \hat{v}_i^* \right)(\omega \otimes \omega) = 0,
+\]
+ибо умножение на наличествующий \(v_i\) и сокращение отсутствующего \(v_i\) дают нуль. Это рассуждение легко обратить.
+
+\begin{exercise}
+  Получите отсюда плюккеровы соотношения для \(\operatorname{Gr}(2,4)\).
+\end{exercise}
+
+В бесконечномерном случае все эти построения возможны почти буквально. Базис \(\{e_i = z^i\}\) фиксирован в \(V_A\) изначально. Пусть базис \(\{e_i^*\}\) двойствен к нему. Операторы \(\hat{e}_i, \hat{e}_i^*\) определяются на \(\bigwedge^{\infty/2} V_A\):  
+\[
+    \hat{e}_i(\omega) = e_i \wedge \omega;
+\]
+\[
+    \hat{e}_i^*( \cdots \wedge v_{-2} \wedge v_{-1} ) = \sum_{s < 0} (-1)^{s+1} \cdots \wedge e_i^*(v_s) \wedge v_{s+1} \wedge \cdots \wedge v_{-1}.
+\]
+
+На самом деле последняя сумма получается конечной (см. определение \(\bigwedge^{\infty/2} V_A\)). 
+
+Оператор \(\Omega = \sum_i \hat{e}_i \otimes \hat{e}_i^*\) корректно определен на \(\bigwedge^{\infty/2} V_A \otimes \bigwedge^{\infty/2} V_A\).
+
+\begin{statement}
+  Элемент \(\omega \in \bigwedge^{\infty/2} V_A\) разложим тогда и только тогда, когда  
+  \[
+    \Omega(\omega \otimes \omega) = 0.
+  \]
+\end{statement}
+
+\begin{proof}
+  Оставляется читателю в качестве упражнения.
+\end{proof}
+
+Отсюда видно, что бесконечномерный грассманиан выделяется в  
+\(P\bigl(\bigwedge^{\infty/2} V_A\bigr)\) бесконечной серией квадратичных соотношений между плюккеровыми координатами, а именно  
+
+
+\begin{equation*}\label{eq:PL}
+    \sum_{s=1}^\infty (-1)^{s+1} \pi (\dots j_2 j_1 i_s) \pi (\dots i_{s+1} i_s i_{s-1} \dots i_1) = 0 \tag{PL}
+\end{equation*}
+
+
+(с учетом косой симметрии плюккеровых координат относительно индексов, последовательности \( \dots j_2 j_1 i_s \) и \( \dots i_{s+1} \hat{i}_s i_{s-1} \dots i_1 \) должны быть полубесконечными индексами в определенном ранее смысле).
+
+\begin{definition}[3]
+  \( G(A) \) есть множество наборов \( \{ \pi_I \mid I \} \) элементов из \( A \), в которых хотя бы один элемент \( \pi_I \) является обратимым; кроме того, для каждой пары последовательностей \( \dots j_2 j_1 \) и \( \dots i_2 i_1 \), удовлетворяющей указанному выше условию, выполнено соотношение (PL).
+\end{definition}
+
+Отметим, что если задан набор \( \{ \pi_I \mid I \} \), обладающий указанными свойствами, то по нему, с помощью формул для аффинных координат, можно восстановить матрицу из \(\operatorname{Frame}(A)\), а стало быть, и допустимый базис соответствующего \(A\)-подмодуля. Соотношения (PL) гарантируют корректность этого восстановления. Таким образом, определения 1, 2 и 3 эквивалентны.
+
+Легко сообразить, что реально в соотношениях (PL) участвуют лишь «нетривиальные» части полубесконечных индексов, т. е. все контролируется соответствующими диаграммами Юнга. При этом если диаграмма Юнга помещается в прямоугольник размером \(k\) строк на \(n\) столбцов, то отвечающая ей координата может рассматриваться как координата на конечномерном грассманиане \(\operatorname{Gr}(k, n)\). Это наблюдение можно переформулировать в алгебре геометрических терминах так. Рассмотрим алгебры \(\mathcal{P}(G)\) и \(\mathcal{P}(\operatorname{Gr}(k, n))\) многочленов от плюккеровых координат, занумерованных соответственно всеми диаграммами Юнга и теми из них, которые имеют размер \(k \times n\), профакторизованные по идеалам соотношений Плюккера (в бесконечномерном случае подразумевается пополнение). Имеются канонические проекции \(\mathcal{P}(G) \to \mathcal{P}(\operatorname{Gr}(k, n))\), при которых \(\pi_Y\) переходит в нуль, если \(Y\) не умещается в \(k \times n\)-прямоугольник, и в соответствующую конечномерную координату в противном случае. Система этих проекций согласована, и потому алгебра \(\mathcal{P}(G)\) есть проективный предел алгебр \(\mathcal{P}(\operatorname{Gr}(k, n))\). В таком случае говорят, что алгебраическое многообразие \(G\), отвечающее \(\mathcal{P}(G)\), является \textbf{проалгебраическим}. Следует отметить, что бесконечномерное грассманово многообразие не является индуктивным пределом конечномерных грассманианов, как это видно, например, из его матричного описания.
+
+В терминах плюккеровых координат мы можем определить целую серию «промежуточных» грассманианов. Предположим для этого, что на алгебре \(A\) определена норма \(\|\cdot\|\). Пусть тогда
+
+\[
+G_{\text{fin}}(A) = \{U \in G(A) \mid \pi_Y = 0 \text{ для почти всех } Y\},
+\]
+\[
+    G_{\exp a}(A) = \left\{U \in G(A) \;\middle|\; \lim_{|Y| \to 0} \sqrt[|Y|]{||\pi_Y||} \leq a\right\},
+\]
+\[
+    G_{\text{an } a}(A) = \left\{U \in G(A) \;\middle|\; \sqrt[|Y|]{\frac{||\pi_Y||}{|Y|/a}} \text{ ограничены при } |Y| \to \infty\right\}.
+\]
+
+Имеем
+\[
+G \supseteq G_{\text{an } 1} \supseteq G_{\text{an } 2} \supseteq \dots \supseteq G_{\exp 1}(A) \supseteq G_{\exp 0}(A) \supseteq G_{\text{fin}}.
+\]
+
+Среди этих грассманианов \(G_{\text{fin}}\) как раз и является индуктивным пределом конечномерных.
+
+
+\begin{exercise}
+  Докажите, что \( G_{\text{fin}}(k) \) состоит из тех подпространств \( U \subset V \), которые соизмеримы с \( V_- \).
+\end{exercise}
+
+
+\section{Уравнение Сато-Вильсона и $\tau$-функция}
+\subsection{S-функции}
+Мы сумели описать уравнение Сато-Вильсона
+
+\[
+dW = Z^- W, \qquad Z^- = -(W\omega_D W^{-1})_-
+\]
+как динамическую систему на бесконечномерном грассманиане \( G(k) \) с эволюционным оператором
+\[
+E(t) = \exp\left(\sum_{i=1}^{\infty} t_i D^i\right),
+\]
+имеющим в матричном представлении вид
+\[
+\tilde{E}(t) = \exp\left(\sum_{i=1}^{\infty} t_i \Lambda^i\right),
+\]
+где \(\Lambda = (\delta_{i+1,j})\).
+
+Пусть \( I \) есть полубесконечный индекс. Введем следующие полиномы от \( t_1, t_2, \dots \), называемые \textit{S-функциями}\footnote{В честь всё того же И. Шура (I. Schur)}:
+\[
+\chi_I(t) = \det\bigl(\tilde{E}(t)^I_{\emptyset}\bigr),
+\]
+где \(\tilde{E}(t)^I_{\emptyset}\) есть подматрица \(\tilde{E}(t)\), состоящая из строк с номерами \(\dots, -2, -1\) и столбцов с номерами \(\dots, i-2, i-1\). Эта матрица «почти» верхняя унитреугольная, поэтому ее детерминант корректно определен.
+
+\begin{example} Для \( I = (\dots, -4, -3, -1, 0) \) имеем
+
+    \[
+\chi_I(t) = \det
+\begin{pmatrix}
+\ddots & * & * & * & * \\
+\cdots & 1 & * & * & * \\
+\cdots & 0 & 1 & p_2 & p_3 \\
+\cdots & 0 & 0 & p_1 & p_2 \\
+\cdots & 0 & 0 & 1 & p_1
+\end{pmatrix}
+= p_1^2 - p_2 = \frac{t_1^2}{2} - t_2.
+\]
+
+\end{example}
+
+Многочлены \(\chi_I(t)\) известны в теории представлений группы \(GL_n\) как характеры ее неприводимых представлений (напомним, что полиномиальные представления этой группы нумеруются диаграммами Юнга). Поэтому не является удивительным следующий факт:
+
+\begin{theorem}
+  Многочлены \(\chi_I(t)\) образуют (топологический) базис в алгебре \(T = k[[t_1, t_2, \dots]]\). Более того, если
+  \[
+    f(t) = \sum_I c_I \chi_I(t),
+  \]
+  то
+  \[
+    c_I = \chi_I(\partial_t) f(t)\big|_{t=0},
+  \]
+  где
+  \[
+    \partial_t = \left( \frac{\partial}{\partial t_1}, \frac{1}{2} \frac{\partial}{\partial t_2}, \frac{1}{3} \frac{\partial}{\partial t_3}, \dots \right).
+  \]
+\end{theorem}
+
+\begin{proof}
+    Читатель может найти в книге И. Г. Макдональда \cite{macdonald}, гл. I.5, пример.
+\end{proof}
+
+\begin{exercise}
+  Найдите \(v(\chi_I(t))\) (напомним, что \(v(t_n) = n\)).
+\end{exercise}
+
+
+
+
+
+\subsection{$\tau$-функция и решение уравнения Сато-Вильсона}
+
+
+При доказательстве интегрируемости уравнения Сато-Вильсона мы видели, что  
+\[
+W^{-1}(t)Y(t) = E(t)W_0^{-1},
+\]  
+где \(W_0\) — начальное условие, а \(Y(t)\) — некоторый чисто дифференциальный оператор, возможно, бесконечного порядка \footnote{Напомним, что \( L(x, t) = L(x + t_1, t_2, \dots) \) и \( W(x, t) = W(x + t_1, t_2, \dots) \), поэтому во всех наших рассмотрениях, относящихся к операторам \( L, W \), мы будем указывать лишь на зависимость от \( t \), полагая
+\[
+L(x, t) = L(t)|_{t_1 \mapsto x + t_1},
+\]
+и т. д.}. Отсюда следует, что  
+\[
+\bigl(W(t)E(t)W_0^{-1}\bigr)_{-} = 0.
+\]  
+
+Пусть \(W(t) = 1 + w_{-1}D^{-1} + w_{-2}D^{-2} + \dots\) и \(w_0 = 1\). Тогда  
+\[
+0 = \left(\sum_i w_{-i}D^{-i}E(t)W_0^{-1}\right)_{-}
+   = \left(\sum_{i,j} w_{-i}\bigl(\tilde{E}(t)\tilde{W}_0^{-1}\bigr)_{-i,j}D^j\right)_{-},
+\]  
+откуда  
+\[
+\sum_{i=0}^{+\infty} w_{-i}\bigl(\tilde{E}(t)\xi\bigr)_{-i,j} = 0 \quad \text{при } j = -1, -2, \dots
+\]  
+Здесь \(\xi = \gamma(W_0)\) — образ при отображении Сато. Иными словами, строка \(w = (\dots, w_{-2}, w_{-1}, 1, 0, 0, \dots)\) есть решение системы линейных уравнений  
+\[
+w\,\tilde{E}(t)\xi = 0
+\]  
+с полубесконечной матрицей \(\hat{\xi}(t) = \tilde{E}(t)\xi\). Воспользовавшись формулами Крамера, получаем  
+\[
+w_{-i} = \frac{(-1)^i \det\hat{\xi}(t)_{(\dots,\dots,i,\dots,0)}}{\det\hat{\xi}(t)_{(\dots,-2,-1)}}.
+\]  
+
+Осталось придать смысл указанным детерминантам, поскольку, как легко сообразить, хотя элементы матрицы \(\hat{\xi}(t)\) как ряды от \(t_1, t_2, \dots\) корректно определены (докажите это!), но сама эта матрица вовсе не является «почти» унитреугольной и не лежит в множестве \(\operatorname{Frame}(T)\). Вспомним формулу Бине--Коши для конечномерных матриц:  
+\[
+\det\bigl((AB)^J_I\bigr) = \sum_K \det(A^K_I) \det(B^J_K),
+\]  
+
+где \( I, J, K \) — мультииндексы одинаковой длины, а \( A^K_I \) и т. д. — соответствующие подматрицы. Действуя по аналогии, запишем
+
+\[
+\pi_I(\hat{\xi}(t)) = \pi_I(\tilde{E}(t)\xi) = \sum_J \det\bigl(\tilde{E}(t)^J_I\bigr) \pi_J(\xi),
+\]
+
+в частности,
+
+\[
+\tau(t, \xi) := \pi_\sigma(\tilde{E}(t)\xi) = \sum_J \chi_J(t) \pi_J(\xi).
+\]
+
+Последнее выражение и называется \(\tau\)-функцией. Благодаря оценке на \(v(\chi_I(t))\) этот формальный ряд корректно определен.
+
+\begin{exercise}
+  Проверьте, что
+  \[
+    \chi_I(\partial_t) \chi_J(t) = \det \tilde{E}_I^J(t).
+  \]
+  Из этого утверждения вытекает, что
+  \[
+    \pi_I(\hat{\xi}(t)) = \chi_I(\partial_t) \tau(t, \xi).
+  \]
+\end{exercise}
+
+Теперь мы можем продолжить наше вычисление. Имеем:
+
+\[
+w_{-i} = \frac{(-1)^i \chi_{(\dots - i \dots 0)}(\partial_t) \tau(t, \xi)}{\tau(t, \xi)}.
+\]
+
+Числитель может быть упрощен благодаря следующей лемме.
+
+\begin{lemma}
+  \[
+    (-1)^i \chi_{(\dots - i \dots 0)}(t) = p_i(-t).
+  \]
+\end{lemma}
+
+\begin{proof}
+  Используем индукцию. При \(i = 0\)
+  \[
+    \chi_{(\dots - 2, -1)}(t) = 1 = p_0(-t).
+  \]
+  Далее, обозначим \(\chi_i(t) = \chi_{(\dots - i \dots 0)}(t)\). По определению
+  \[
+    \chi_i(t) = \det
+    \begin{pmatrix}
+      p_1 & p_2 & \cdots & p_{i-1} & p_i \\
+      1 & p_1 & \cdots & p_{i-2} & p_{i-1} \\
+      \vdots & \vdots & \ddots & \vdots & \vdots \\
+      0 & \cdots & 1 & p_1 & p_2 \\
+      0 & \cdots & 0 & 1 & p_1
+    \end{pmatrix}
+    = p_1(t) \chi_{i-1}(t) - p_2(t) \chi_{i-2}(t) + \cdots + (-1)^{i-1} p_i(t) \chi_0(t).
+  \]
+
+
+По предположению индукции
+
+\[
+\sum_{s=1}^{i} (-1)^{s-1} p_s(t) \chi_{i-s}(t) = (-1)^{i-1} \sum_{s=1}^{i} p_s(t) p_{i-s}(-t).
+\]
+
+Но
+
+\[
+1 = \exp\left(\sum t_i \lambda^i\right) \exp\left(-\sum t_i \lambda^i\right) = \sum_{i=0}^{\infty} \left(\sum_{s=0}^{i} p_s(t) p_{i-s}(-t)\right) \lambda^i,
+\]
+
+поэтому
+
+\[
+\chi_i = -(-1)^{i-1} p_i(-t).
+\]
+\end{proof}
+
+\begin{theorem}
+    Пусть \(W(x, t) = 1 + \sum w_{-i} D^{-i} + \dots\) есть решение~\ref{eq:SV}. Тогда существует и единственен, с точностью до умножения на константу, такой формальный ряд \(\tau(t)\) с \(\tau(0) \neq 0\), что
+  \[
+    w_{-i}(x, t) = \frac{p_i(-\partial_t)\tau(t)}{\tau(t)} \bigg|_{t_1 \to t_1+x}.
+  \]
+\end{theorem}
+
+\begin{example}
+  Имеем
+  \[
+    w_{-1} = \frac{1}{\tau} \left(\frac{\partial\tau}{\partial t_1}\right) = \frac{\partial^2}{\partial t_1^2} \log \tau.
+  \]
+  Допустим, мы ищем решениe~\ref{eq:KdF}, т. е. оператор вида \(L = D^2 + u(x, t)\). Найдем такой оператор \(W = 1 + w_{-1} D^{-1} + \dots\), что \(L = W D^2 W^{-1}\). Тогда
+  \[
+    L = D^2 - 2w_{-1}^{(1)}.
+  \]
+  Стало быть, для решения \(u(x, t)\) уравнения (КдФ) существует такой формальный ряд \(\tau\), что
+  \[
+    u = -2 \frac{d^2}{dx^2} \log \tau
+  \]
+  (мы подразумеваем замену \(t\) на \(x + t\)).
+\end{example}
+
+\begin{exercise}
+  1. Найти решение (СВ), отвечающее точке
+  \[
+    \langle \dots, z^{-4}, z^{-3}, 1 + z^{-2}, 1 + z^{-1} \rangle
+  \]
+  бесконечномерного грассманиана.
+
+  2. Пусть \(W^{-1} = \sum_i D^{-i} w_{-i}^*\). Докажите, что если \(W\) удовлетворяет (СВ) и \(\tau\) — соответствующая \(\tau\)-функция, то
+  \[
+    w_{-i}^*(x, t) = \frac{p_i(\partial_t)\tau(t)}{\tau(t)} \bigg|_{t_1 \to t_1+x}.
+  \]
+\end{exercise}
+
+
+
+
+
+\subsection{Уравнения Хироты}
+Поскольку действие СВ-потоков на бесконечномерный грассманиан приводит к движению точки по грассманиану\footnote{Наша «динамическая система» формальна, но иногда мы будем позволять себе подобную вольность речи.}, а плюкеровы координаты движущейся точки выражаются через \(\tau\)-функцию, то соотношения Плюккера превращаются в уравнения на эту функцию, которые называются \textbf{уравнениями Хироты}. Объясним ситуацию более аккуратно.
+
+Отправляясь от соотношения
+
+\[
+W^{-1}(t)Y(t) = E(t)W_0^{-1},
+\]
+
+попробуем описать образ \(W(t)\) при отображении Сато. Рассмотрим матричную запись этого равенства
+
+\[
+\begin{pmatrix}
+\xi(t)_- & 0 \\
+\xi(t)_+ & \xi(t)_{++}
+\end{pmatrix}
+\begin{pmatrix}
+Y_- & Y_- \\
+0 & Y_{++}
+\end{pmatrix}
+=
+\tilde{E}(t)
+\begin{pmatrix}
+\xi_- & 0 \\
+\xi_+ & \xi_{++}
+\end{pmatrix}.
+\]
+
+здесь \(\gamma(W(t)) = \xi(t)\) и \(\gamma(W_0) = \xi\), матрицы \(\xi(t)_{--}\), \(\xi(t)_{++}\), \(\xi_{--}\), \(\xi_{++}\) — нижние унитреугольные. Выполняя умножение и последующее обрезание правых половин матриц, находим
+
+\[
+\begin{pmatrix}
+\xi(t)_{--} Y_{--} \\
+\xi(t)_{++} Y_{--}
+\end{pmatrix}
+= \tilde{E}(t)\xi,
+\]
+
+откуда
+
+\[
+\det Y_{--} = \det(\xi(t)_{--}Y_{--}) = \pi_{\emptyset}(\tilde{E}(t)\xi) = \tau(t,\xi).
+\]
+
+Здесь следует пояснить, что матрица \(Y_{--}\) является четвертьбесконечной матрицей общего вида и ни в каком разумном смысле ее детерминант не определен, тем не менее, приведенное «равенство» мы и примем за определение. Далее,
+
+\[
+\chi_I(\partial_t)\tau = \pi_I(\tilde{E}(t)\xi) = \pi_I(\xi(t)Y_{--}) = \pi_I(\xi(t))\det Y_{--} = \pi_I(\xi(t))\tau,
+\]
+
+стало быть,
+
+\[
+\pi_I(\xi(t)) = \frac{\chi_I(\partial_t)\tau}{\tau}.
+\]
+
+Но \(\xi(t) = \gamma(W(t)) \in \mathbf{G}^{\emptyset}(T)\), поэтому плюккеровы координаты точки \(\xi(t)\) должны удовлетворять соотношениям Плюккера
+
+\[
+\sum_{s=1}^{\infty}(-1)^{s+1}\chi_{(\dots j_2 j_1 i_s)}(\partial_t)\tau \cdot \chi_{(\dots i_{s+1} \hat{i}_s i_{s-1} \dots i_1)}(\partial_t)\tau = 0
+\]
+
+для всех полубесконечных индексов. Эти уравнения на \(\tau\)-функцию и есть \textit{уравнения Хироты}. Приятно отметить, что в этом месте «мистический» \(\det Y_{--}\) исчезает.
+
+Обратно, если \(\tau \in T = k[[t_1, t_2, \dots]]\) удовлетворяет уравнениям Хироты, то набор \(\{\chi_I(\partial_t)\tau/\tau\}\) является набором плюккеровых координат точки из \(\mathbf{G}^{\emptyset}(T)\), а ей отвечает оператор из \(\mathcal{V}_K\), являющийся решением~\ref{eq:SV} (продумайте это утверждение!). Подведем итог.
+
+\begin{theorem}
+  Следующие объекты находятся во взаимно однозначном соответствии:
+  \begin{enumerate}
+    \item операторы \( W(t) \in \mathcal{V}_K \), удовлетворяющие уравнению (CB),
+    \item «орбиты» динамической системы \( (G^2(k), E(t)) \),
+    \item обратимые \(\tau\)-функции из \( T = k[[t_1, t_2, \dots]] \), с точностью до умножения на константу, удовлетворяющие уравнениям Хироты.
+  \end{enumerate}
+\end{theorem}
+
+\subsection{\(\tau\)-функция и решения иерархии КП}
+
+Пусть \( L \) есть решение КП-иерархии, а \( W_1, W_2 \) — одевающие операторы:  
+\( L = W_1 D W_1^{-1} = W_2 D W_2^{-1} \). Тогда, как уже известно (~\ref{dressing_operator}), \( W_1 = W_2 C \), где \( C \in \mathcal{V}_k \). \(\tau\)-функция же определена решением (CB) с точностью до константы.
+
+\begin{lemma}
+  Следующая диаграмма коммутативна
+
+    
+\begingroup
+\shorthandoff{"}
+\[
+\begin{tikzcd}
+	W \arrow[rr, "\exp\left(-\sum c_j D^{-j}\right)"] \arrow[dd, leftrightarrow] & & W' \arrow[dd, leftrightarrow] \\
+	\\
+	\tau \bmod k^{\times} \arrow[rr, "\exp\left(\sum c_j t_j\right)"'] & & \tau' \bmod k^{\times}
+\end{tikzcd}
+\]
+\endgroup
+
+
+
+
+
+\end{lemma}
+
+\begin{proof}
+  Полученное ранее выражение для \(W\) через \(\tau\) может быть переписано в виде
+  \[
+    W = \frac{1}{\tau} \sum (p_i(-\partial_t) \tau) D^{-i} = \frac{1}{\tau} \exp\left(-\sum \frac{1}{j} \frac{\partial}{\partial t_j} D^{-j}\right) \tau.
+  \]
+  Полагая
+  \[
+    \tau' = \tau e^{\sum c_j t_j},
+  \]
+  имеем
+  \[
+    \begin{aligned}
+      W' &= \frac{1}{\tau'} \exp\left(-\sum \frac{1}{j} \frac{\partial}{\partial t_j} D^{-j}\right) \tau' \\
+         &= \frac{e^{-\sum c_j t_j}}{\tau} \exp\left(-\sum \frac{1}{j} \frac{\partial}{\partial t_j} D^{-j}\right) (\tau e^{\sum c_j t_j}) \\
+         &= \frac{1}{\tau} \left( \exp\left(-\sum \frac{1}{j} \frac{\partial}{\partial t_j} D^{-j}\right) \tau \right) \exp\left(-\sum c_j \frac{D^{-j}}{j}\right) \\
+         &= W \exp\left(-\sum c_j \frac{D^{-j}}{j}\right),
+    \end{aligned}
+  \]
+  где предпоследнее равенство следует из того, что оператор
+  \[
+    \exp\left(-\sum \frac{1}{j} \frac{\partial}{\partial t_j} D^{-j}\right)
+  \]
+  есть автоморфизм кольца формальных степенных рядов.
+\end{proof}
+
+Итак, две \(\tau\)-функции задают одно и то же решение \ref{eq:KP}-иерархии тогда и только тогда, когда
+\[
+\tau' = \tau e^{c_0 + \sum c_i t_i}.
+\]
+для некоторых $c_0, c_1, \hdots \in k$.
+
+
+
+
+
+
+
+
+\section{Алгебраические кривые и якобианы. I}
+\subsection{Кривые}
+\begin{definition}
+  Алгебраической (аффинной) кривой \(C\) над полем \(k\) мы будем называть множество нулей многочлена \(F(x, y) \in k[x, y]\) в \(\mathbf{A}_k^2\). В случае \(k = \mathbb{C}\) (или произвольного алгебраически замкнутого поля) множество \(C\) непусто, если \(F \neq \operatorname{const}\). Точка \((x_0, y_0)\) кривой \(C\) называется \textit{неособой}, если \(\operatorname{grad} F(x, y)|_{(x_0, y_0)} \neq 0\). Кривая называется \textit{неособой}, если все её точки неособые. Если точка \((x_0, y_0)\) неособа и \(\frac{\partial F}{\partial y}\big|_{(x_0, y_0)} \neq 0\), то по теореме о неявной функции вблизи \((x_0, y_0)\) можно выразить \(y\) через \(x\); таким образом, \(x\) есть \textit{локальная координата} на \(C\) в окрестности \((x_0, y_0)\).
+\end{definition}
+
+
+Мы будем иметь дело с комплексными кривыми, для которых существует удобное геометрическое представление — римановы поверхности.
+
+\begin{example}
+  Рассмотрим многочлен
+  \[
+    F(x, y) = y^2 - \prod_{i=1}^N (x - x_i).
+  \]
+  Соответствующая кривая неособа тогда и только тогда, когда все \(x_i\) различны, что мы и будем предполагать. В окрестности \(x = x_i\) риманова поверхность выглядит как \(y^2 = x\), стало быть, для изготовления модели римановой поверхности для \(C\) надо взять два экземпляра \(\mathbb{C}\), соединить разрезами \(x_1\) и \(x_2\), \(x_3\) и \(x_4\) и т. д. Если \(N\) нечётно, то \(x_N\) надо соединить с бесконечно удалённой точкой.
+\end{example}
+
+
+\begin{center}
+\centering
+\begin{tikzpicture}
+    \draw (0, 0) -- (2, 2);
+    \draw (2, 2) -- (8, 2); 
+    \draw (0, 0) -- (6, 0);
+    \draw (6, 0) -- (8, 2);
+    
+    \draw (2, 1) node[left] {$x_1$} -- (3, 1) node[right] {$x_2$};
+    \draw (5, 1) node[left] {$x_N$} -- (7, 1) node[right] {$\infty$};
+
+\end{tikzpicture}
+\end{center}
+
+
+\begin{center}
+\centering
+\begin{tikzpicture}
+    \draw (0, 0) -- (2, 2);
+    \draw (2, 2) -- (8, 2); 
+    \draw (0, 0) -- (6, 0);
+    \draw (6, 0) -- (8, 2);
+    
+    \draw (2, 1) node[left] {$x_1$} -- (3, 1) node[right] {$x_2$};
+    \draw (5, 1) node[left] {$x_N$} -- (7, 1) node[right] {$\infty$};
+
+\end{tikzpicture}
+\end{center}
+
+Далее необходимо склеить надлежащим образом берега разрезов. Получается следующая картинка:
+
+%\begin{figure}[!ht]
+
+
+%\centering
+
+%\begin{subfigure}
+%\begin{circuitikz}
+%\tikzstyle{every node}=[font=\fontsize{18.2pt}{23.7pt}\selectfont]
+%\draw [line width=1.6pt, short] (29.375,3) arc[start angle=-29.80, end angle=-328.08, radius=13.1604];
+%\draw [line width=1.6pt, short] (36.125,16.5) -- (25.5,16.5);
+%\draw [line width=1.6pt, short] (35.875,14.25) -- (26.5,14.25);
+%\draw [line width=1.6pt, short] (35.5,4.875) -- (24.875,4.875);
+%\draw [line width=1.6pt, short] (35.75,3) -- (25.125,3);
+%\draw [line width=1.6pt, short] (29.75,14.25) arc[start angle=19.01, end angle=-17.48, radius=14.9732];
+%\draw [line width=1.6pt, short] (34.5,16.5) arc[start angle=149.84, end angle=-146.66, radius=12.8320];
+%\draw [line width=1.6pt, short] (34.125,4.875) arc[start angle=-149.85, end angle=-205.57, radius=10.0383];
+%\end{circuitikz}
+%}%
+%\label{fig:my_label}
+%\end{subfigure}
+
+%\begin{subfigure}
+%\begin{tikzpicture}[yscale=cos(70)]
+%    \draw[double distance=5mm] (0:1) arc (0:180:1);
+%    \draw[double distance=5mm] (180:1) arc (180:360:1);
+%\end{tikzpicture}
+%\end{subfigure}
+%\end{figure}
+
+%\begin{figure}[!ht]
+%\centering
+%\begin{subfigure}{0.45\textwidth}
+%\centering
+%\resizebox{\linewidth}{!}{%
+%\begin{circuitikz}[scale=0.15, transform shape]
+%\draw [line width=1.2pt] (29.375,3) arc[start angle=-29.80, end angle=-328.08, radius=13.1604];
+%\draw [line width=1.2pt] (36.125,16.5) -- (25.5,16.5);
+%\draw [line width=1.2pt] (35.875,14.25) -- (26.5,14.25);
+%\draw [line width=1.2pt] (35.5,4.875) -- (24.875,4.875);
+%\draw [line width=1.2pt] (35.75,3) -- (25.125,3);
+%\draw [line width=1.2pt] (29.75,14.25) arc[start angle=19.01, end angle=-17.48, radius=14.9732];
+%\draw [line width=1.2pt] (34.5,16.5) arc[start angle=149.84, end angle=-146.66, radius=12.8320];
+%\draw [line width=1.2pt] (34.125,4.875) arc[start angle=-149.85, end angle=-205.57, radius=10.0383];
+%\end{circuitikz}%
+%}
+%\end{subfigure}
+%\hfill
+%\begin{subfigure}{0.1\textwidth}
+%\centering
+%\begin{circuitikz}
+%\tikzstyle{every node}=[font=\fontsize{18.2pt}{23.7pt}\selectfont]
+%\draw [ line width=1.4pt ] (30.875,13.25) ellipse (13.25cm and 6.125cm);
+%\draw [line width=1.4pt, short] (38.375,14.5) arc[start angle=-45.79, end angle=-134.21, radius=10.9354];
+%\draw [line width=1.4pt, short] (25.125,13.375) arc[start angle=124.12, end angle=55.88, radius=10.0289];
+%\draw  (3,9.375) ellipse (4.875cm and 2.625cm);
+%\draw [short] (6.5,9.875) arc[start angle=-49.22, end angle=-130.78, radius=5.4541];
+%\draw [short] (0.25,9.25) arc[start angle=118.94, end angle=61.06, radius=5.5539];
+%\end{circuitikz}
+
+
+
+%\end{subfigure}
+%\end{figure}
+
+\begin{figure}[!ht]
+\centering
+\begin{subfigure}{0.45\textwidth}
+\centering
+\resizebox{\linewidth}{!}{%
+\begin{circuitikz}[scale=0.15, transform shape]
+\draw [line width=1.2pt] (29.375,3) arc[start angle=-29.80, end angle=-328.08, radius=13.1604];
+\draw [line width=1.2pt] (36.125,16.5) -- (25.5,16.5);
+\draw [line width=1.2pt] (35.875,14.25) -- (26.5,14.25);
+\draw [line width=1.2pt] (35.5,4.875) -- (24.875,4.875);
+\draw [line width=1.2pt] (35.75,3) -- (25.125,3);
+\draw [line width=1.2pt] (29.75,14.25) arc[start angle=19.01, end angle=-17.48, radius=14.9732];
+\draw [line width=1.2pt] (34.5,16.5) arc[start angle=149.84, end angle=-146.66, radius=12.8320];
+\draw [line width=1.2pt] (34.125,4.875) arc[start angle=-149.85, end angle=-205.57, radius=10.0383];
+\end{circuitikz}%
+}
+\end{subfigure}
+\hfill
+\raisebox{1.5cm}{\scalebox{2.5}{$\approx$}}
+\hfill
+\begin{subfigure}{0.45\textwidth}
+\centering
+\resizebox{\linewidth}{!}{%
+\begin{circuitikz}[scale=0.15, transform shape]
+\draw[line width=0.8pt] (30.875,13.25) ellipse (13.25cm and 6cm);
+\draw[line width=0.8pt] (38.375,14.5) arc[start angle=-45.79, end angle=-134.21, radius=10.9354];
+\draw[line width=0.8pt] (24.5,13.375) arc[start angle=124.12, end angle=55.88, radius=11];
+\end{circuitikz}%
+}
+\end{subfigure}
+\end{figure}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
